@@ -27,6 +27,7 @@ def generarArbolProfundidad (nivel, matrizE):
     
     #Verificar si terminó el juego
     if padre.pruebaTerminal():
+        #Ya hay un resultado final
         return
     
     #Ejecute mientras la pila este llena
@@ -60,6 +61,23 @@ def generarArbolProfundidad (nivel, matrizE):
 
 def podarArbol(nivel, matriz):
     nodos_expandidos = generarArbolProfundidad(nivel, matriz)
-    return len(nodos_expandidos)
+    posicion_nodo = 0
+    arreglo_nodos = []
+    padre_nodo_hoja=0
+    se_poda = 'no'
+
+    for nodo in nodos_expandidos[posicion_nodo+1]:
+        if nodo.get_profundidad() == nivel:
+            posicion_nodo = nodos_expandidos.index(nodo)
+            nodo_hoja_actual = nodo
+
+            if padre_nodo_hoja == 0:
+                padre_nodo_hoja = nodo_hoja_actual.get_padre()    
+    
+            if nodo_hoja_actual.get_padre().get_padre().get_valor_utilidad() in [float('-inf'), float('inf')]:
+                nodo_hoja_actual.calcularUtilidad()
+                padre_nodo_hoja.quitarInfinito(nodo_hoja_actual.get_valor_utilidad())
+                padre_nodo_hoja.get_padre().quitarInfinito(padre_nodo_hoja.get_valor_utilidad())
+
 
 print(podarArbol(2, matriz))

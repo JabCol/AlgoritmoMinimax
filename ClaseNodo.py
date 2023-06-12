@@ -36,6 +36,9 @@ class Nodo:
     def get_operador(self):
         return self.operador
     
+    def get_valor_utilidad(self):
+        return self.valor_utilidad
+    
     #Métodos set
     def set_valor_utilidad (self):
         if (self.tipo == 'MAX'):
@@ -52,12 +55,15 @@ class Nodo:
     #Métodos necesarios para el programa
     def pruebaTerminal(self):
         return ubicarElementos(self.estado, None, [1,2,3,4,5,6,7]) 
+    
+    def quitarInfinito(self, valor):
+        self.valor_utilidad = valor
 
     def modificarTipo (self):
         if self.padre is None:
             self.tipo = 'MAX' 
         elif self.padre.get_tipo() == 'MAX':
-            self.tipo = 'MIN'
+            self.tipo = 'MIN'   
         else:
             self.tipo = 'MAX'    
 
@@ -65,6 +71,36 @@ class Nodo:
         if (self.padre != None):
             self.profundidad = self.padre.get_profundidad() +1  
 
+    def calcularUtilidad(self):
+        resultado = self.puntuacion_max - self.puntuacion_min
+        if resultado > 0:
+            self.valor_utilidad = 1
+        if resultado < 0:
+            self.valor_utilidad = -1
+        else:
+            self.valor_utilidad = 0
+
+    # def calcularUtilidad(self):
+    #     resultado = self.puntuacion_max - self.puntuacion_min
+    #     puntaje_max = 0
+
+    #     for movimiento, punmax, punmin, operador in self.moverElemento():
+    #         puntaje_max = max(puntaje_max, punmax)
+
+    #     print(resultado)
+    #     if resultado != 0:
+    #         if (puntaje_max) > self.puntuacion_min:
+    #             self.valor_utilidad = 1
+    #         elif (puntaje_max) < self.puntuacion_min:
+    #             self.valor_utilidad = -1     
+    #         else:  
+    #             self.valor_utilidad = 0      
+    #     else:
+    #         if (self.puntuacion_max+puntaje_max) > self.puntuacion_min:
+    #             self.valor_utilidad = 0.5
+    #         else:
+    #             self.valor_utilidad = 0
+                       
     def moverElemento(self):
 
         matriz = self.estado
@@ -87,7 +123,7 @@ class Nodo:
         puntoMIN = self.puntuacion_min
 
         # Intentar realizar cada movimiento válido
-        for row, column, operador in [(2, 1, "baja-derecha"), (2, -1, "baja-izquierda"), (-2, 1, "sube-derecha"), (-2, -1, "baja-izquierda"),(1, 2, "derecha-baja"), (-1, 2, "derecha-sube"), (1, -2, "izquierda-baja"), (-1, -2, "izquierda-sube")]:
+        for row, column, operador in [(2, 1, "baja-derecha"), (2, -1, "baja-izquierda"), (-2, 1, "sube-derecha"), (-2, -1, "sube-izquierda"),(1, 2, "derecha-baja"), (-1, 2, "derecha-sube"), (1, -2, "izquierda-baja"), (-1, -2, "izquierda-sube")]:
 
             # Verificar si el movimiento es válido
             if fila + row in range(len(matriz)) and columna + column in range(len(matriz[0])) and matriz[fila + row][columna + column] != ficha:
@@ -96,7 +132,6 @@ class Nodo:
                 matriz_aux = copy.deepcopy(matriz)
 
                 #sume lo que halla en la casilla
-                # if matriz_aux[fila + row][columna + column] in [0, 1, 2, 3, 4, 5, 6, 7]:
                 if (ficha == 'N'):
                     #Almacéne la puntuacion en el hijo, puntuacion del padre mas uno.
                     puntoMAX += matriz_aux[fila + row][columna + column]
@@ -114,3 +149,19 @@ class Nodo:
         # Devolver el arreglo de movimientos válidos
         return movimientos  
     
+matriz = [
+    [0, 0, 0, 0, 0, 4, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 1, 0, 0, 0,'N',0],
+    [0, 1, 0, 0, 3, 0, 0, 0],
+    [0,'B',0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 6, 0, 0, 0],
+    [0, 0, 5, 0, 0, 0, 2, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+]
+
+nodo = Nodo(matriz,None,None)
+nodo.set_punto_max(1)
+nodo.set_punto_min(5)
+nodo.calcularUtilidad()
+print(nodo.get_valor_utilidad())
