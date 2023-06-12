@@ -33,6 +33,9 @@ class Nodo:
     def get_tipo(self):
         return self.tipo 
     
+    def get_operador(self):
+        return self.operador
+    
     #Métodos set
     def set_valor_utilidad (self):
         if (self.tipo == 'MAX'):
@@ -48,7 +51,7 @@ class Nodo:
 
     #Métodos necesarios para el programa
     def pruebaTerminal(self):
-        return ubicarElementos(self.estado, [1,2,3,4,5,6,7], None) 
+        return ubicarElementos(self.estado, None, [1,2,3,4,5,6,7]) 
 
     def modificarTipo (self):
         if self.padre is None:
@@ -84,7 +87,7 @@ class Nodo:
         puntoMIN = self.puntuacion_min
 
         # Intentar realizar cada movimiento válido
-        for row, column, operador in [(2, 1, "baja-derecha"), (2, -1, "baja-izquierda"), (-2, 1, "sube-derecha"), (-2, -1, "baja-izquierda"),(1, 2, "derecha-baja"), (-1, 2, "derecha-sube"), (1, -2, "izquierda-baja"), (-1, -2, "baja-izquierda")]:
+        for row, column, operador in [(2, 1, "baja-derecha"), (2, -1, "baja-izquierda"), (-2, 1, "sube-derecha"), (-2, -1, "baja-izquierda"),(1, 2, "derecha-baja"), (-1, 2, "derecha-sube"), (1, -2, "izquierda-baja"), (-1, -2, "izquierda-sube")]:
 
             # Verificar si el movimiento es válido
             if fila + row in range(len(matriz)) and columna + column in range(len(matriz[0])) and matriz[fila + row][columna + column] != ficha:
@@ -111,20 +114,3 @@ class Nodo:
         # Devolver el arreglo de movimientos válidos
         return movimientos  
     
-# matriz = [
-#     [0, 0, 0, 0, 0, 4, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 1, 0, 0, 0, 'N', 0],
-#     [0, 7, 0, 0, 3, 0, 0, 0],
-#     [0, 'B', 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 6, 0, 0, 0],
-#     [0, 0, 5, 0, 0, 0, 2, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0],
-# ]
-
-# def mostrarMatriz(matriz):
-#     for fila in matriz:
-#         print(fila,'\n')
-   
-# nodo = Nodo(matriz, None, None)
-# mostrarMatriz(nodo.moverElemento())  
