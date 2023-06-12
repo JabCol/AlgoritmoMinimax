@@ -48,7 +48,7 @@ class Nodo:
 
     #Métodos necesarios para el programa
     def pruebaTerminal(self):
-        return ubicarElementos(self.estado, [1,2,3,4,5,6,7]) 
+        return ubicarElementos(self.estado, [1,2,3,4,5,6,7], None) 
 
     def modificarTipo (self):
         if self.padre is None:
@@ -93,18 +93,38 @@ class Nodo:
                 matriz_aux = copy.deepcopy(matriz)
 
                 #sume lo que halla en la casilla
-                if matriz_aux[fila + row][columna + column] in [0, 1, 2, 3, 4, 5, 6, 7]:
-                    if (ficha == 'N'):
-                        #Almacéne la puntuacion en el hijo, puntuacion del padre mas uno.
-                        puntoMAX += matriz_aux[fila + row][columna + column]
-                    else:
-                        puntoMIN += matriz_aux[fila + row][columna + column]   
-                    #Actualizar la matriz con el movimiento
-                    matriz_aux[fila + row][columna + column] = matriz_aux[fila][columna]
-                    matriz_aux[fila][columna] = 0
+                # if matriz_aux[fila + row][columna + column] in [0, 1, 2, 3, 4, 5, 6, 7]:
+                if (ficha == 'N'):
+                    #Almacéne la puntuacion en el hijo, puntuacion del padre mas uno.
+                    puntoMAX += matriz_aux[fila + row][columna + column]
+                else:
+                    puntoMIN += matriz_aux[fila + row][columna + column]   
+                #Actualizar la matriz con el movimiento
+                matriz_aux[fila + row][columna + column] = matriz_aux[fila][columna]
+                matriz_aux[fila][columna] = 0
                 
                 # Agregar la actualización al arreglo    
                 movimientos.append((matriz_aux, puntoMAX, puntoMIN, operador))
+                puntoMAX = self.puntuacion_max
+                puntoMIN = self.puntuacion_min
 
         # Devolver el arreglo de movimientos válidos
         return movimientos  
+    
+# matriz = [
+#     [0, 0, 0, 0, 0, 4, 0, 0],
+#     [0, 0, 0, 0, 0, 0, 0, 0],
+#     [0, 0, 1, 0, 0, 0, 'N', 0],
+#     [0, 7, 0, 0, 3, 0, 0, 0],
+#     [0, 'B', 0, 0, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 6, 0, 0, 0],
+#     [0, 0, 5, 0, 0, 0, 2, 0],
+#     [0, 0, 0, 0, 0, 0, 0, 0],
+# ]
+
+# def mostrarMatriz(matriz):
+#     for fila in matriz:
+#         print(fila,'\n')
+   
+# nodo = Nodo(matriz, None, None)
+# mostrarMatriz(nodo.moverElemento())  

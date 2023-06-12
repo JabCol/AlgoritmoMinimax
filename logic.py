@@ -12,7 +12,6 @@ matriz = [
     [0, 0, 0, 0, 0, 0, 0, 0],
 ]
 pila = [] #Guardará los nodos hijos
-expandidos = [] #Guardará los nodos expandidos
 
 #Función que genera árbol por profundidad dependiendo de la matriz que le ingrese y el nivel
 def generarArbolProfundidad (nivel, matrizE):
@@ -22,6 +21,8 @@ def generarArbolProfundidad (nivel, matrizE):
     pila.insert(0,padre)
     #Variable que contendrá el primer elemeto de la pila, es decir el padre
     padre_expandido = 0
+    #Lista de nodos expandidos
+    expandidos = []
 
     #Verificar si terminó el juego
     if padre.pruebaTerminal():
@@ -51,8 +52,10 @@ def generarArbolProfundidad (nivel, matrizE):
         
         #Agregar padre a la lista de nodos expandidos
         expandidos.append(padre_expandido)
-    print('Árbol listo con profundidad', nivel)
-    podarArbol(nivel, matriz)
+    print('Árbol listo con profundidad: ', nivel)
+    return expandidos
 
 def podarArbol(nivel, matriz):
     pass    
+
+print(generarArbolProfundidad(2,matriz))
