@@ -40,11 +40,8 @@ class Nodo:
         return self.valor_utilidad
     
     #Métodos set
-    def set_valor_utilidad (self):
-        if (self.tipo == 'MAX'):
-            self.valor_utilidad = float('-inf')
-        else:
-            self.valor_utilidad = float('inf')  
+    def set_valor_utilidad (self, valor):
+        self.valor_utilidad = valor
 
     def set_punto_max(self, valor):
         self.puntuacion_max = valor
@@ -58,6 +55,12 @@ class Nodo:
     
     def quitarInfinito(self, valor):
         self.valor_utilidad = valor
+
+    def asignarUtilidadProvisional (self):
+        if (self.tipo == 'MAX'):
+            self.valor_utilidad = float('-inf')
+        else:
+            self.valor_utilidad = float('inf')  
 
     def modificarTipo (self):
         if self.padre is None:
@@ -75,10 +78,10 @@ class Nodo:
         resultado = self.puntuacion_max - self.puntuacion_min
         if resultado > 0:
             self.valor_utilidad = 1
-        if resultado < 0:
+        elif resultado < 0:
             self.valor_utilidad = -1
         else:
-            self.valor_utilidad = 0
+            self.valor_utilidad = 0        
 
     # def calcularUtilidad(self):
     #     resultado = self.puntuacion_max - self.puntuacion_min
@@ -161,7 +164,7 @@ matriz = [
 ]
 
 nodo = Nodo(matriz,None,None)
-nodo.set_punto_max(1)
+nodo.set_punto_max(5)
 nodo.set_punto_min(5)
 nodo.calcularUtilidad()
 print(nodo.get_valor_utilidad())
