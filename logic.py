@@ -1,17 +1,18 @@
 from ClaseNodo import Nodo  
 from funciones import revisarNodoRepetido
+from main import nivel, matriz
 
 #Variables necesarias
-matriz = [
-    [0, 0, 0, 0, 0, 4, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0,'N',0],
-    [0, 7, 0, 0, 3, 0, 0, 0],
-    [0,'B',0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 6, 0, 0, 0],
-    [0, 0, 5, 0, 0, 0, 2, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-]
+# matriz = [
+#     [0, 0, 0, 0, 0, 4, 0, 0],
+#     [0, 0, 0, 0, 0, 0, 0, 0],
+#     [0, 0, 1, 0, 0, 0,'N',0],
+#     [0, 7, 0, 0, 3, 0, 0, 0],
+#     [0,'B',0, 0, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 6, 0, 0, 0],
+#     [0, 0, 5, 0, 0, 0, 2, 0],
+#     [0, 0, 0, 0, 0, 0, 0, 0],
+# ]
 
 pila = [] #Guardará los nodos hijos
 
@@ -65,23 +66,18 @@ def generarArbolProfundidad (nivel, matrizE):
 def generarHijos(primerHermano, padre, listaNodos):
     hijos = []
     hijos.append(primerHermano)
-
     ultima_posicion = -1  # Inicializar la variable con un valor inválido
     for i, nodo in enumerate(listaNodos):
         if nodo.get_padre() == padre:
             hijos.append(nodo)
             ultima_posicion = i  # Actualizar la posición del último nodo añadido
-
     return hijos, ultima_posicion
 
 
 def calcularUtilidadHijoEnLista(lista_hijos):
-
     for hijo in lista_hijos:
         hijo.calcularUtilidad()
-
     lista_hijos.sort(key=lambda x: x.get_valor_utilidad())    
-
     return lista_hijos
 
 def podarHijos(lista_hijos, listaArbol, num):
@@ -157,7 +153,7 @@ def podaAlphaBetha (nivel, matriz):
 
     return proximo_movimiento               
 
-for fila in podaAlphaBetha(2, matriz).get_estado():
+for fila in podaAlphaBetha(nivel, matriz).get_estado():
     print(fila, '\n')
     
 
