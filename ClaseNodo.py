@@ -13,6 +13,7 @@ class Nodo:
         self.valor_utilidad = float('-inf')
         self.tipo = 'MAX'
         self.profundidad = 0
+        self.hijos = []
 
     #Métodos getters
     def get_padre(self):
@@ -39,7 +40,13 @@ class Nodo:
     def get_valor_utilidad(self):
         return self.valor_utilidad
     
+    def get_hijos(self):
+        return self.hijos
+    
     #Métodos set
+    def set_hijos (self,valor):
+        self.hijos.insert(0,valor)
+
     def set_valor_utilidad (self, valor):
         self.valor_utilidad = valor
 
