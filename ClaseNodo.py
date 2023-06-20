@@ -83,13 +83,7 @@ class Nodo:
 
     def calcularUtilidad(self):
         resultado = self.puntuacion_max - self.puntuacion_min
-        self.valor_utilidad = resultado
-        # if resultado > 0:
-        #     self.valor_utilidad = 1
-        # elif resultado < 0:
-        #     self.valor_utilidad = -1
-        # else:
-        #     self.valor_utilidad = 0        
+        self.valor_utilidad = resultado     
 
     # def calcularUtilidad(self):
     #     resultado = self.puntuacion_max - self.puntuacion_min
@@ -160,19 +154,3 @@ class Nodo:
         # Devolver el arreglo de movimientos válidos
         return movimientos  
     
-# matriz = [
-#     [0, 0, 0, 0, 0, 4, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 1, 0, 0, 0,'N',0],
-#     [0, 1, 0, 0, 3, 0, 0, 0],
-#     [0,'B',0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 6, 0, 0, 0],
-#     [0, 0, 5, 0, 0, 0, 2, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0],
-# ]
-
-# nodo = Nodo(matriz,None,None)
-# nodo.set_punto_max(5)
-# nodo.set_punto_min(5)
-# nodo.calcularUtilidad()
-# print(nodo.get_valor_utilidad())

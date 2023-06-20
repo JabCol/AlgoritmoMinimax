@@ -90,6 +90,7 @@ def mejorMovimiento(nivel, matriz):
 
     hijo_raiz = arbol[0].get_hijos()
     mejor_movimiento = max(hijo_raiz, key=lambda x: x.get_valor_utilidad())
+    
     return mejor_movimiento.get_estado()
 
 movimiento = mejorMovimiento(4, matriz)

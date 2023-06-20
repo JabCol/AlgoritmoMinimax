@@ -14,13 +14,5 @@ def ubicarElementos(matriz, elementoabuscar, elementos):
         return coordenadas
     return True
    
-#___________________________________________________________________________________________________
+#_____________________________________________________________________________________________
 
-def revisarNodoRepetido(posibleEstado, nodoPadre):
-    if nodoPadre.get_padre() == None: # el nodo no tiene padre (es la raíz)
-        return True # el estado del hijo es diferente a todos los ancestros
-    #Se compara directamente con el abuelo, porque un padre nunca se tendrá así mismo como hijo
-    elif posibleEstado == nodoPadre.get_padre().get_estado(): # el estado del hijo es igual al del padre
-        return False # el estado del hijo es igual a uno de sus ancestros
-    else:
-        return revisarNodoRepetido(posibleEstado, nodoPadre.get_padre()) # recursivamente revisa al siguiente ancestro
