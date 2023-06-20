@@ -1,5 +1,4 @@
 from ClaseNodo import Nodo  
-from funciones import revisarNodoRepetido
 #from main import nivel, matriz
 
 #Variables necesarias
@@ -68,11 +67,11 @@ def generarArbolProfundidad (nivel, matrizE):
 def mejorMovimiento(nivel, matriz):
     arbol = generarArbolProfundidad(nivel, matriz)
 
-    def minimax(nodo, esMaximizador):
+    def minimax(nodo, esMax):
         if nodo.get_profundidad() == nivel:
             return nodo.get_valor_utilidad()
 
-        if esMaximizador:
+        if esMax:
             valor = float('-inf')
             for hijo in nodo.get_hijos():
                 valor = max(valor, minimax(hijo, False))
