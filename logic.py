@@ -6,7 +6,7 @@ from funciones import revisarNodoRepetido
 matriz = [
     [0, 0, 0, 0, 0, 4, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [10, 0, 1, 0, 0, 0,'N',0],
+    [0, 0, 1, 0, 0, 0,'N',0],
     [0, 7, 0, 0, 3, 0, 0, 0],
     [0,'B',0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 6, 0, 0, 0],
@@ -88,10 +88,11 @@ def mejorMovimiento(nivel, matriz):
     for nodo in arbol:
         minimax(nodo, True)
 
-    mejor_movimiento = max(arbol, key=lambda x: x.get_valor_utilidad())
+    hijo_raiz = arbol[0].get_hijos()
+    mejor_movimiento = max(hijo_raiz, key=lambda x: x.get_valor_utilidad())
     return mejor_movimiento.get_estado()
 
-movimiento = mejorMovimiento(2, matriz)
+movimiento = mejorMovimiento(4, matriz)
 
 for fila in movimiento:
     print(fila)
