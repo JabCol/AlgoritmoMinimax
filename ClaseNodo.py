@@ -81,10 +81,10 @@ class Nodo:
         if (self.padre != None):
             self.profundidad = self.padre.get_profundidad() +1  
 
-    def verificarPuntosCercanos (self, posiciones, ficha):
+    def verificarPuntosCercanos (self, posiciones, jugador):
         matriz = self.estado
             
-        if ficha == 'MAX':
+        if jugador == 'MAX':
             # Ubicar a caballo blanco y sus coordenadas
             elemento = ubicarElementos(matriz, 'B', None)
             ficha = 'N'
