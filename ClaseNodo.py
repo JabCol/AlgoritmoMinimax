@@ -81,30 +81,56 @@ class Nodo:
         if (self.padre != None):
             self.profundidad = self.padre.get_profundidad() +1  
 
+    def verificarPuntosCercanos (self, posiciones, ficha):
+        matriz = self.estado
+            
+        if ficha == 'MAX':
+            # Ubicar a caballo blanco y sus coordenadas
+            elemento = ubicarElementos(matriz, 'B', None)
+            ficha = 'N'
+        else:
+            # Ubicar a caballo negro y sus coordenadas
+            elemento = ubicarElementos(matriz, 'N', None)
+            ficha='B'
+
+        fila = elemento[0][0]
+        columna = elemento[0][1]
+        
+        contador = 0
+
+        for row, column, operador in [(2, 1, "baja-derecha"), (2, -1, "baja-izquierda"), (-2, 1, "sube-derecha"), (-2, -1, "sube-izquierda"),(1, 2, "derecha-baja"), (-1, 2, "derecha-sube"), (1, -2, "izquierda-baja"), (-1, -2, "izquierda-sube")]:
+
+            # Verificar si el movimiento es válido
+            if fila + row in range(len(matriz)) and columna + column in range(len(matriz[0])) and matriz[fila + row][columna + column] != ficha:
+
+                for coordenada in posiciones:
+                    if coordenada[0] == fila + row and coordenada[1] == columna + column:
+                        contador += 1
+
+        return contador                
+
     def calcularUtilidad(self):
-        resultado = self.puntuacion_max - self.puntuacion_min
-        self.valor_utilidad = resultado     
 
-    # def calcularUtilidad(self):
-    #     resultado = self.puntuacion_max - self.puntuacion_min
-    #     puntaje_max = 0
+        posicion_puntos = []
 
-    #     for movimiento, punmax, punmin, operador in self.moverElemento():
-    #         puntaje_max = max(puntaje_max, punmax)
+        for fila in self.estado:
+            for elemento in fila:
+                if elemento != 0 and elemento != 'B' and elemento != 'N':
+                    posicion_puntos.append((fila, elemento))
 
-    #     print(resultado)
-    #     if resultado != 0:
-    #         if (puntaje_max) > self.puntuacion_min:
-    #             self.valor_utilidad = 1
-    #         elif (puntaje_max) < self.puntuacion_min:
-    #             self.valor_utilidad = -1     
-    #         else:  
-    #             self.valor_utilidad = 0      
-    #     else:
-    #         if (self.puntuacion_max+puntaje_max) > self.puntuacion_min:
-    #             self.valor_utilidad = 0.5
-    #         else:
-    #             self.valor_utilidad = 0
+        utilidad = 2 * (self.puntuacion_max - self.puntuacion_min) 
+        utilidad += 0.5 * len(posicion_puntos) 
+
+        puntoB = self.verificarPuntosCercanos(posicion_puntos, 'MAX')
+        puntoN = self.verificarPuntosCercanos(posicion_puntos, 'MIN')
+
+        if puntoB > puntoN:
+            utilidad += 0.3
+        elif puntoB < puntoN:
+            utilidad -= 0.3        
+
+        self.valor_utilidad = utilidad
+
                        
     def moverElemento(self):
 
@@ -153,4 +179,8 @@ class Nodo:
 
         # Devolver el arreglo de movimientos válidos
         return movimientos  
+    
+
+
+
     
